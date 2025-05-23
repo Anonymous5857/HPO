@@ -1,0 +1,27 @@
+answer_format: At the end, wrap only your final option between <ANS_START> and <ANS_END>
+  tags
+base_instruction: You are a mathematics expert.You will be given a mathematics problem
+  which you need to solve.
+best_prompt: null
+curr_sample: null
+demonstration_examples: []
+expert_identity: null
+few_shot_count: 3
+generate_expert_identity: true
+generated_knowledge: null
+max_correct_count: 5
+max_eval_batches: 5
+mutate_refine_iterations: 1
+mutation_rounds: 1
+num_train_examples: 3
+prompt_technique_name: attr_sentiment_prompt_refine
+questions_batch_size: 1
+refine_instruction: true
+sample_problem: null
+specific_problem: null
+style_variation: 5
+task_description: You are a mathematics expert.You will be given a mathematics problem
+  which you need to solve.
+task_name: aquarat
+top_n: 1
+unique_model_id: deepseek-v3
