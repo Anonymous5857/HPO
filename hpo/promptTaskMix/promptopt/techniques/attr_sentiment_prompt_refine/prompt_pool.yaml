@@ -1,0 +1,367 @@
+final_prompt: |
+  
+  [Task_instruction]: {instruction}
+  
+  Here are some examples related to this task:
+  [Demonstration Examples]: {few_shot_examples}
+  
+  Based on the above examples and the task instruction, please complete the following specific problem:
+  [Specific Problem]: {specific_problem}
+  
+  {answer_format}
+
+best_prompt: |
+  {expert_identity}
+  
+  [Task_instruction]: {task_description}
+  
+  Here are some examples related to this task:
+  [Demonstration Examples]: {few_shot_examples}
+
+  Based on the above examples and the task instruction, please complete the following specific problem:
+  [Specific Problem]: {specific_problem}
+
+eval_prompt: |
+  {instruction}
+  
+  [Question] {question}
+  [Answer] 
+
+quest_reason_ans: |
+
+  [Question] {question}
+  [Answer] {answer}
+
+system_prompt: ""
+
+expert_profile: You are a helpful assistant developed by DeepSeek that can efficiently perform tasks as per instruction
+
+thinking_styles:
+  informal_to_formal:
+    - "Identify informal language elements such as slang, contractions, or casual tone, and replace them with more formal equivalents."
+    - "Focus on clarity, grammatical correctness, and professional tone to produce a polished and respectful version of the original sentence."
+    - "Break down the sentence structure, upgrade vocabulary where needed, and ensure the rewritten version aligns with formal writing conventions."
+    - "Preserve the original meaning while elevating the tone and style to meet formal communication standards."
+    - "Review the final output to ensure consistency, formality, and appropriateness for academic or professional settings."
+  negation:
+    - "Understand the full meaning and intent of the original sentence, then construct a new sentence that conveys the direct opposite."
+    - "Break down the sentence into key components—subject, action, and context—and invert each to reverse the overall meaning."
+    - "Focus on logical negation and antonyms while maintaining grammatical correctness and fluency in the rewritten sentence."
+    - "Ensure the new sentence maintains the same structure where possible, but with meaning fully reversed for clarity and contrast."
+    - "Double-check that the generated sentence contradicts the original in intent, tone, and factual content without introducing ambiguity."
+  orthography_starts_with:
+    - "Identify the target character in brackets at the end of the sentence, then scan the sentence for words beginning with that character."
+    - "Break the sentence into individual words, compare the first letter of each word with the target character, and collect all matches."
+    - "Focus on precision by filtering only those words whose initial character exactly matches the given letter, ignoring case if necessary."
+    - "Ensure accurate word segmentation by handling punctuation properly and avoiding false matches."
+    - "Verify that the output contains all and only the words starting with the specified character, preserving their original form."
+  rhymes:
+    - "Analyze the phonetic structure of the input word, especially the ending sounds, to identify words with similar rhyming patterns."
+    - "Use knowledge of pronunciation and syllable structure to find words that end with the same or highly similar sounds."
+    - "Focus on sound rather than spelling to ensure that the generated words truly rhyme with the input."
+    - "Filter potential candidates to include only commonly used and clearly rhyming words, avoiding partial or slant rhymes."
+    - "Double-check that each word in the output shares the same ending sound as the input word, and list them clearly using commas."
+  object_counting:
+    - "Carefully examine the input to identify all distinct objects, then count them accurately."
+    - "Break down the input into individual elements and apply consistent criteria to determine what qualifies as an object."
+    - "Focus on precision by avoiding double-counting or missing any objects, especially in complex or cluttered inputs."
+    - "Use a methodical approach by scanning the input systematically from start to end, tallying each object as it's identified."
+    - "Verify the final count by recounting or cross-checking to ensure it matches the number of clearly defined objects in the input."
+  odd_one_out:
+    - "Analyze the semantic meaning, category, or usage of each word to identify the one that doesn't fit with the rest."
+    - "Compare the words in terms of function, context, or common attributes, and look for a word that breaks the pattern."
+    - "Focus on identifying shared characteristics among most words, then isolate the one that lacks those traits."
+    - "Break down the list logically, testing for consistency in theme, category, or language type to find the exception."
+    - "Ensure your choice clearly contrasts with the others and justify the selection based on a specific, observable difference."
+  word_unscrambling:
+    - "Generate all possible permutations of the letters in the given word, ensuring each letter is used exactly once per arrangement."
+    - "Filter the generated permutations to retain only valid words that exist in the dictionary or are commonly recognized."
+    - "Focus on completeness by systematically exploring every letter combination without duplicates or omissions."
+    - "Use pattern recognition and vocabulary knowledge to identify which permutations form meaningful and grammatically valid words."
+    - "Verify the final list to ensure all words are real, meaningful, and use the original letters exactly once."
+  cause_and_effect:
+    - "Carefully read both sentences and analyze the logical connection to determine which one leads to the other."
+    - "Look for signal words or phrases (e.g., 'because', 'due to', 'as a result') that help indicate causality and identify the cause."
+    - "Focus on understanding the sequence of events — the cause happens first and brings about the effect."
+    - "Use reasoning to infer which event is the underlying trigger or explanation for the other sentence."
+    - "Double-check by reversing the logic, ask yourself if one sentence explains why the other happened — if yes, that is the cause."
+  word_sorting:
+    - "Extract the first character of each word and use it as the key to sort the entire list alphabetically."
+    - "Focus on consistent ordering rules by comparing the initial letters of words using standard alphabetical sequence (A-Z)."
+    - "Ensure that sorting is case-insensitive unless specified otherwise, treating uppercase and lowercase letters equally."
+    - "Break the task into steps, identify first letters, apply sorting logic, and reassemble the ordered list of words."
+    - "Double-check the final order to make sure that no words are out of sequence based on their starting character."
+  synonyms:
+    - "Identify the core meaning of the input word and find a synonym that shares a similar definition or concept."
+    - "Focus on the context in which the word is typically used, and select a word that would fit naturally in the same context."
+    - "Use semantic networks or your knowledge of word relationships to identify a word with a similar meaning."
+    - "Ensure the chosen word retains the same overall meaning but might differ slightly in tone or usage."
+    - "Verify that the synonym chosen is valid in the same linguistic context, ensuring the two words can be interchanged appropriately."
+  auto_debugging:
+    - "Carefully review the code line by line, checking for common syntax errors, typos, or misplaced punctuation that could cause issues."
+    - "Analyze the logic flow of the program, identifying any logical errors, incorrect conditions, or misused functions that might lead to incorrect behavior."
+    - "Focus on debugging systematically, testing the program in smaller parts to isolate the section causing the error."
+    - "Use debugging tools, such as breakpoints or print statements, to track variable values and execution flow, helping pinpoint the source of the error."
+    - "Verify that all dependencies, imports, and external functions are properly defined and used, and ensure that the program runs as expected in the intended environment."
+  second_word_letter:
+    - "Identify the position of the second letter in the word and extract it directly, ensuring you count the letters correctly from the start."
+    - "Focus on the first two characters of the word, then select the second one, ensuring the word contains at least two letters."
+    - "Break down the word into its individual letters and select the character in the second position to ensure accuracy."
+    - "Check for edge cases where the word may be too short (less than two characters) and handle them appropriately."
+    - "Ensure that you are working with the correct letter, paying attention to any leading spaces or punctuation that might affect the position count."
+  common_concept:
+    - "Analyze each object in the list to identify shared features such as category, function, or physical attributes that link them together."
+    - "Focus on comparing the objects based on their key properties, such as shape, color, size, or purpose, to find the commonality."
+    - "Look for a pattern or theme that runs across all the items, considering both obvious and subtle connections that may define the group."
+    - "Break down the characteristics of each object and identify the most universal attribute that could be used to describe the entire list."
+    - "Verify that the characteristic you identify applies equally to all the objects, ensuring it is broad enough to encompass the entire set but specific enough to provide insight."
+  auto_categorization:
+    - "Analyze all the given words to identify shared features or themes that suggest a logical grouping."
+    - "Compare the semantic relationships between words and determine the most inclusive and meaningful category."
+    - "Break the task into identifying patterns, recognizing common attributes, and selecting the most accurate label."
+    - "Focus on clarity and relevance when selecting a category that best represents the entire word set."
+    - "Evaluate multiple possible categories and choose the one that captures the core concept linking all the words."
+  antonyms:  
+    - "Interpret the meaning of the given word accurately, then retrieve a word with a directly opposite meaning."
+    - "Focus on semantic polarity, ensuring the generated word contrasts clearly with the original in meaning."
+    - "Break down the task by analyzing the word's part of speech and context, then match it with a valid antonym."
+    - "Ensure linguistic correctness by selecting a common and appropriate antonym rather than obscure or context-specific terms."
+    - "Verify the relationship between the input and output to ensure they are true antonyms and not merely unrelated opposites."
+  taxonomy_animal:  
+    - "Carefully scan each word in the list, comparing it against known animal names to ensure accurate identification."
+    - "Focus on semantic understanding of each word, relying on general knowledge to distinguish animals from non-animals."
+    - "Filter out irrelevant items by categorizing words into animals and non-animals based on common features (e.g., living, capable of movement, species)."
+    - "Prioritize correctness by cross-verifying ambiguous words with animal-related characteristics before adding them to the final list."
+    - "Approach the task methodically by analyzing the list step-by-step and ensuring the final selection only contains valid animal names."
+  diff:  
+    - "Break down the task into clear steps, perform the required operation, and review the result to ensure it makes sense."
+    - "Concentrate on the final result, ensuring the operation is performed correctly to reach the expected outcome."
+    - "Pay attention to precision in every step, ensuring that the correct numbers are used and the right operations are applied."
+    - "Approach the task systematically by handling one operation at a time, checking the numbers, and applying the correct calculation."
+    - "Before doing any calculation, verify the numbers involved, then proceed with the operation and confirm the result."
+  sum:  
+    - "Break down the task into clear steps, perform the required operation, and review the result to ensure it makes sense."
+    - "Concentrate on the final result, ensuring the operation is performed correctly to reach the expected outcome."
+    - "Pay attention to precision in every step, ensuring that the correct numbers are used and the right operations are applied."
+    - "Approach the task systematically by handling one operation at a time, checking the numbers, and applying the correct calculation."
+    - "Before doing any calculation, verify the numbers involved, then proceed with the operation and confirm the result."
+  sentence_similarity:  
+    - "Carefully compare the meaning of both sentences, analyze their semantic overlap, and assign one of the predefined similarity ratings, 0 - Definitely not, 1 - Probably not, 2 - Possibly, 3 - Probably, 4 - Almost perfectly, 5 - Perfectly."
+    - "Break down each sentence into its core ideas, then check for equivalence, inclusion, or contradiction between those ideas before choosing a similarity score."
+    - "Focus on the intent and factual content behind each sentence, disregarding minor syntactic or stylistic differences, to determine the true level of similarity."
+    - "First evaluate lexical and grammatical similarity, then move on to deeper semantic understanding to make a well-reasoned final judgment."
+    - "Pretend you're grading how well two students expressed the same idea—use the rating scale as a rubric to score their similarity."
+  letters_list:
+    - "Iterate through the input word and insert a space after each character except the last one to maintain proper formatting."
+    - "Break the word into individual characters and then rejoin them using a single space as a separator."
+    - "Focus on creating evenly spaced character pairs to preserve the original order while adding clarity."
+    - "Ensure the transformation does not alter or remove any characters—only adds spaces between them."
+    - "Double-check that the output length matches the expected pattern: (2 × word length) - 1 characters, accounting for the spaces."
+  sst5:
+    - "Focus on the emotional tone and intensity in the text. Think about whether the sentiment is strongly expressed or mild, and whether it’s positive, negative, or neutral. This helps in distinguishing between 'very positive', 'positive', and so on."
+    - "Pay close attention to context and nuance. A word that seems negative might be used sarcastically or affectionately, depending on the context. Interpreting subtle emotional cues is key to fine-grained sentiment classification."
+    - "Imagine how a human reader would feel after reading the text — angry, indifferent, happy, extremely pleased, etc. Map that feeling to one of the sentiment categories. Empathizing with the text helps guide classification."
+    - "Look at both individual emotional keywords and the overall structure of the sentence or paragraph. Are the negative words dominant, or are they outweighed by positive framing? Use the overall balance to decide the label."
+    - "Think of the sentiment categories as a scale. Place each piece of text somewhere along that scale by estimating its emotional weight — not just whether it’s positive or negative, but how much."
+  gsm8k:
+    - "Break down the problem step by step. Identify what is being asked, list known quantities, and determine what operations or formulas are needed to reach the answer. Clear stepwise thinking prevents missing key information."
+    - "Translate word problems into equations or expressions. Focus on identifying numerical relationships and dependencies between quantities, especially when they are described in natural language."
+    - "Check for consistency and units. Make sure intermediate steps make sense numerically and logically. If something feels off, retrace steps to locate potential misinterpretations or calculation errors."
+    - "Use estimation to verify plausibility. After solving, ask yourself: is this result reasonable given the context? Estimation helps catch mistakes and build intuition for the problem."
+    - "Look for patterns or analogies to familiar problems. Often, a new question can be solved using the structure of previously seen problems—recognizing these similarities can accelerate and deepen reasoning."
+  svamp:
+    - "Break down the problem step by step. Identify what is being asked, list known quantities, and determine what operations or formulas are needed to reach the answer. Clear stepwise thinking prevents missing key information."
+    - "Translate word problems into equations or expressions. Focus on identifying numerical relationships and dependencies between quantities, especially when they are described in natural language."
+    - "Check for consistency and units. Make sure intermediate steps make sense numerically and logically. If something feels off, retrace steps to locate potential misinterpretations or calculation errors."
+    - "Use estimation to verify plausibility. After solving, ask yourself: is this result reasonable given the context? Estimation helps catch mistakes and build intuition for the problem."
+    - "Look for patterns or analogies to familiar problems. Often, a new question can be solved using the structure of previously seen problems—recognizing these similarities can accelerate and deepen reasoning."
+  aquarat:
+    - "Break down the problem step by step. Identify what is being asked, list known quantities, and determine what operations or formulas are needed to reach the answer. Clear stepwise thinking prevents missing key information."
+    - "Translate word problems into equations or expressions. Focus on identifying numerical relationships and dependencies between quantities, especially when they are described in natural language."
+    - "Check for consistency and units. Make sure intermediate steps make sense numerically and logically. If something feels off, retrace steps to locate potential misinterpretations or calculation errors."
+    - "Use estimation to verify plausibility. After solving, ask yourself: is this result reasonable given the context? Estimation helps catch mistakes and build intuition for the problem."
+    - "Look for patterns or analogies to familiar problems. Often, a new question can be solved using the structure of previously seen problems—recognizing these similarities can accelerate and deepen reasoning."
+  sst2:
+    - "Focus on the overall sentiment expressed in the text — is the tone generally favorable or unfavorable? Don’t get distracted by isolated words; consider the sentence as a whole."
+    - "Identify emotionally charged words and phrases. Words that convey praise, satisfaction, or enthusiasm often signal positivity, while words expressing criticism, disappointment, or frustration suggest negativity."
+    - "Consider the main subject or target of the sentiment. Determine whether the speaker or writer is expressing approval or disapproval toward it."
+    - "Watch out for negation and contrast. Phrases like 'not good' or 'although it was boring...' can flip the sentiment, so it’s important to track sentence structure carefully."
+    - "Imagine reading the text aloud — does it sound like a complaint or a compliment? Using your intuition about tone and intent can help you make a clear binary decision."
+  default:
+    - "Let's think step by step."
+    - "Let's analyze the key elements first."
+    - "We'll begin by identifying patterns or rules."
+    - "Let's break down the input and process it logically."
+    - "Let's focus on the goal and work backwards if needed."
+    - "Before attempting to solve the problem, first analyze the task description carefully. Identify the input format, expected output, constraints, and any underlying patterns before implementing the solution."
+    - "Identify key patterns or rules in the provided data and formulate a systematic approach to solve the problem. Consider both explicit and implicit structures."
+    - "Start by solving a simplified version of the problem, then gradually refine the solution by considering additional complexities."
+    - "For classification or negation tasks, think about counterfactual examples, how would the output change if certain parts of the input were modified?"
+    - "Reframe the problem into a familiar problem type. For example, if a task involves finding similarities, consider it as a clustering problem."
+    - "For reasoning-based tasks, explicitly state each logical step needed to arrive at the correct answer. Consider edge cases and contradictions."
+    - "If given sample inputs and outputs, analyze them to infer underlying rules or transformation patterns before implementing a solution."
+    - "Verify the solution using different approaches (e.g., rule-based vs. learning-based methods) to ensure robustness and correctness."
+    - "When generating outputs (e.g., paraphrases or transformed sentences), maintain structural consistency while ensuring correctness and naturalness."
+    - "Focus on the most informative parts of the input while ignoring irrelevant details. Identify key tokens, phrases, or structural elements that drive the decision."
+    - "For multi-step reasoning problems, break them into hierarchical steps. Solve intermediate steps first, then combine them for the final solution."
+    - "When dealing with tasks requiring world knowledge (e.g., commonsense reasoning), incorporate external information where necessary."
+    - "For linguistic transformation tasks (e.g., informal to formal rewriting), explicitly identify key linguistic features that differentiate the styles."
+    - "After generating an output, evaluate its correctness using both rule-based and human-like judgment criteria."
+    - "Ignoring the current best solution, create an entirely new solution to the problem."
+    - "Let's make a step by step plan and implement it with good notion and explanation."
+
+
+# ans_delimiter_instruction: " Wrap only your final answer, without reason for each question separately between <ANS_START> and <ANS_END> tags."
+ans_delimiter_instruction: ""
+
+meta_critique_template: |
+  I'm trying to write a zero-shot instruction that will help the most capable and suitable agent to solve the task.
+  My current prompt is: "{instruction}"
+  But this prompt gets the following examples wrong: {examples}
+  Provide detail feedback which identifies reasons where the instruction could have gone wrong.
+  Wrap each reason with <START> and <END>
+    
+
+critique_refine_template: |
+  I am trying to craft a zero-shot instruction that will enable the most capable and suitable agent to solve the given task effectively.
+  
+  My current prompt is: "{instruction}".
+  However, this prompt produces the following {trueorfalse} examples:
+  
+  Below, I have listed each example along with the agent's predicted answer and the ground truth answer
+  
+  {examples_answer_reasons}
+  By carefully analyzing and comparing the predicted answers with the correct ones, identify the reasons behind the incorrect predictions. 
+  Use these insights intelligently to refine the current prompt, ensuring that these examples are no longer yield erroneous outputs.
+  Based on the above analysis, I now want you to generate {num_samples} improved versions of the prompt.
+  
+  [Refined Prompt]:
+
+  Please note that the output Refined prompt should be strictly enclosed with <START> and <END>.
+
+
+solve_template: |
+  You are given a prompt instruction and the following specific question of the same task.
+  [Instruction]: {instruction}
+
+  [Question]: {sample_problem}
+
+  Complete the [Question] based on the [instruction] and Make sure to output final answer wrapped with <ANS_START> and <ANS_END>.
+  The final answer should be wrapped in <ANS_START> and <ANS_END> and should only contain the final answer, without any reasoning or related explanations.
+
+  [Answers]:
+  
+
+meta_sample_template: |
+  You are given a task description and different thinking styles as follows:
+  [Task Description]: {task_description}
+  [Thinking Styles]: {thinking_styles}
+  Now you need to generate {num_variations} variations of above task description adaptively mixing thinking styles while keeping similar semantic meaning with original Task Description. 
+  Make sure to output only the final task descriptions as a paragraph without any [] labels, and wrap each generated task description with <START> and <END>.
+  [Generated Prompts]:
+
+
+intent_template: |
+  You are given a task description labeled as Task Description. Based on the given task description, list 3-5 keywords in a comma-separated format under [Intent] 
+  that define the key characteristics or properties required by the most capable and suitable agent to solve the task.
+  [Task Description]: {task_description}
+  [Intent]:
+  Please ensure that your final output consists of the final 3-5 keywords without including the [Intent] label.
+
+gen_knowledge_template: |
+  Generate interpretation about the following instruction: {base_instruction}
+  
+  Please output the interpretation directly without including any other content.
+
+gen_attribute_template: |
+  Extract only the key words or phrases from the following instruction that are most likely to influence a language model's output. Do not include any explanations or extra content. Just list the key words or phrases.
+  
+  [Instruction]: {base_instruction}
+
+attribute_based_refine_template: |
+  Below is the prompt for the task instruction:
+  {base_instruction}
+
+  The key words or phrases identified in the task instruction are:
+  {attributed_componment}
+
+  Please refine the original task instruction based on these key components. The refinement may include (but is not limited to) the following actions:
+  1、Refine vague terms to be more specific
+  2、Reorder key phrases for emphasis
+  3、Expand or compress phrases for clarity and focus
+  4、Add stylistic or structural constraints
+  5、Test synonyms or alternative wording
+  6、Eliminate redundant elements
+
+  The output should be an optimized version of the original task instruction.
+  Please ensure that the refined task_description is strictly enclosed within <START> and <END>.
+
+
+  
+expert_template: |
+  For each instruction, write a high-quality description about the most capable and suitable agent to answer the instruction. In second person perspective.\n
+  
+  [Instruction]: Make a list of 5 possible effects of deforestation.\n
+  [Agent Description]: You are an environmental scientist with a specialization in the study of ecosystems and their interactions with human activities. You have extensive knowledge about the effects of deforestation on the environment, including the impact on biodiversity, climate change, soil quality, water resources, and human health. Your work has been widely recognized and has contributed to the development of policies and regulations aimed at promoting sustainable forest management practices. You are equipped with the latest research findings, and you can provide a detailed and comprehensive list of the possible effects of deforestation, including but not limited to the loss of habitat for countless species, increased greenhouse gas emissions, reduced water quality and quantity, soil erosion, and the emergence of diseases. Your expertise and insights are highly valuable in understanding the complex interactions between human actions and the environment.
+  
+  
+  [Instruction]: Identify a descriptive phrase for an eclipse.\n
+  [Agent Description]: You are an astronomer with a deep understanding of celestial events and phenomena. Your vast knowledge and experience make you an expert in describing the unique and captivating features of an eclipse. You have witnessed and studied many eclipses throughout your career, and you have a keen eye for detail and nuance. Your descriptive phrase for an eclipse would be vivid, poetic, and scientifically accurate. You can capture the awe-inspiring beauty of the celestial event while also explaining the science behind it. You can draw on your deep knowledge of astronomy, including the movement of the sun, moon, and earth, to create a phrase that accurately and elegantly captures the essence of an eclipse. Your descriptive phrase will help others appreciate the wonder of this natural phenomenon.
+  
+
+  
+  [Instruction]: Identify the parts of speech in this sentence: \"The dog barked at the postman\".\n
+  [Agent Description]: You are a linguist, well-versed in the study of language and its structures. You have a keen eye for identifying the parts of speech in a sentence and can easily recognize the function of each word in the sentence. You are equipped with a good understanding of grammar rules and can differentiate between nouns, verbs, adjectives, adverbs, pronouns, prepositions, and conjunctions. You can quickly and accurately identify the parts of speech in the sentence "The dog barked at the postman" and explain the role of each word in the sentence. Your expertise in language and grammar is highly valuable in analyzing and understanding the nuances of communication.
+  
+  
+  [Instruction]: {task_description}
+  [Agent Description]:
+  Please ensure that your final output is a single paragraph without including the [Agent Description] label.
+
+examples_critique_template_zero_shot: |
+  You are an expert example selector who can help in selecting the right in-context examples to assist the most suitable agent in solving a given problem.
+  
+  You are provided with the task description and a specific problem within this task, represented as follows:
+  [Task Description]: {task_description}
+  [Specific Problem]: {specific_problem}
+  
+  To better assist the agent in solving the specific problem mentioned above, I'm writing {num_examples} in-context examples that are most relevant to this specific problem.
+  
+  When selecting examples, carefully consider the following criteria:
+  
+  Diversity in the types of examples
+  Complexity in the nature/characteristics of the examples
+  Relevance and compatibility with the overall example set
+  Based on these considerations, provide all suggested examples along with improvements that could be made to enhance each individual example within the entire selection set.
+
+examples_optimization_template: |
+  You are an expert example selector who specializes in selecting the right in-context examples to help the agent solve a given problem effectively.
+  
+  You are provided with the task description and a specific problem within this task, represented as follows:
+  [Task Description]: {task_description}
+  [Specific Problem]: {specific_problem}
+  
+  Additionally, you are given a set of suggestions/improvements that could enhance each example in the selection set:
+  [SUGGESTION/IMPROVEMENT]: {critique}
+  
+  Based on this information, carefully and strategically create a new set of {num_examples} examples that are directly relevant to the specific problem while adhering to the given suggestions and improvements.
+  
+  Each example must be wrapped within <START> and <END>, following this strict format:
+  
+  Example Format:
+  [Question] followed by question part of the example
+  [Answer] followed by the all the steps of logic reasoning statements related to answer. The final answer is wrapped with "<ANS_START>" and "<ANS_END>"
+  Example Template:
+  <START>  
+    [Question]:
+    [Answer]:
+      <ANS_START>
+      <ANS_END>
+  <END>  
+  
+  Now, please generate the new set of improved examples following the format shown above. Please ensure that the new examples retain the <START>, <END>, [Question], [Answer], and <ANS_START>, <ANS_END> tags in the generated new examples:
+  
+  [New Examples]:
+
+
+  

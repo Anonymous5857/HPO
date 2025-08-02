@@ -1,0 +1,26 @@
+answer_format: ''
+base_instruction: For each given word, provide a list of words that rhyme with the
+  input word=
+best_prompt: null
+curr_sample: null
+demonstration_examples: []
+expert_identity: null
+few_shot_count: 3
+generate_expert_identity: true
+generated_knowledge: null
+max_correct_count: 5
+max_eval_batches: 5
+mutate_refine_iterations: 1
+mutation_rounds: 1
+num_train_examples: 3
+prompt_technique_name: attr_sentiment_prompt_refine
+questions_batch_size: 1
+refine_instruction: true
+sample_problem: null
+specific_problem: null
+style_variation: 5
+task_description: In this task, you will be given a single word as input. Your job
+  is to produce a list of comma-separated words that rhyme with the input word.
+task_name: informal_to_formal
+top_n: 1
+unique_model_id: GPT_3.5_Trubo

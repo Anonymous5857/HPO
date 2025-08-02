@@ -1,0 +1,24 @@
+answer_format: For each question present the reasoning followed by the correct answer.
+base_instruction: ''
+best_prompt: ''
+curr_sample: {}
+demonstration_examples: []
+expert_identity: ''
+few_shot_count: 3
+generate_expert_identity: true
+generated_knowledge: null
+max_correct_count: 4
+max_eval_batches: 3
+mutate_refine_iterations: 1
+mutation_rounds: 1
+num_train_examples: 3
+prompt_technique_name: attr_critique_n_refine
+questions_batch_size: 1
+refine_instruction: true
+sample_problem: ''
+specific_problem: ''
+style_variation: 3
+task_description: Your task is to complete the following code.
+task_name: ''
+top_n: 1
+unique_model_id: deepseek-v3

@@ -1,0 +1,196 @@
+final_prompt: |
+  
+  [Task_instruction]: {instruction}
+  
+  Here are some examples related to this task:
+  [Demonstration Examples]: {few_shot_examples}
+  
+  Based on the above examples and the task instruction, please complete the following specific problem:
+  [Specific Problem]: {specific_problem}
+  
+  {answer_format}
+
+best_prompt: |
+  {expert_identity}
+  
+  [Task_instruction]: {task_description}
+  
+  Here are some examples related to this task:
+  [Demonstration Examples]: {few_shot_examples}
+  
+  Complete the code as an expert programmer based on the following requirements: {specific_problem}
+
+
+eval_prompt: |
+  {instruction}
+  
+  [Question] {question}
+  [Answer] 
+
+quest_reason_ans: |
+
+  [Question] {question}
+  [Answer] {answer}
+
+system_prompt: You are a helpful assistant developed by DeepSeek that can efficiently perform tasks as per instruction
+
+expert_profile: You are a helpful assistant developed by DeepSeek that can efficiently perform tasks as per instruction
+
+thinking_styles:
+  - "Before completing the code, you should first write the function implementation process in pseudocode. At the same time, be sure to analyze the test cases in the specific problem. Based on the analysis of the test cases, complete the code."
+  - "Before completing the code, you should first write the function implementation process in pseudocode.This pseudocode may include sequential, branch, and loop structures, and then complete the code."
+  - "Break down the coding problem into smaller, manageable parts. Identify core components and focus on solving one part at a time."
+  - "Let's think step by step."
+  - "Let's make a step by step plan and implement it with good notion and explanation."
+
+
+# ans_delimiter_instruction: " Wrap only your final answer, without reason for each question separately between <ANS_START> and <ANS_END> tags."
+ans_delimiter_instruction: ""
+
+critique_refine_template: |
+  I'm trying to write a zero-shot instruction that will help the most capable and suitable agent to solve the task.
+  My current prompt is: "{instruction}"
+  However, this prompt produces the following examples {trueorfalse}:
+  Below are each example, the corresponding generated code, and the reasons why the generated code fails when tested against the test cases: 
+  {examples_code_reasons}
+  Carefully analyzing these failure reasons, use them intelligently to refine the current prompt to ensure that these examples are not answered incorrectly.
+  Based on the above information, I now want you to write {num_samples} different improved prompts.
+  Each prompt should be wrapped with <START> and <END>.
+  
+  [Refined Prompts]:
+
+
+solve_template: |
+  You are given a prompt instruction and the following {questions_batch_size} specific questions of the same task.
+  [Instruction]: {instruction}
+
+  [Question]: {sample_problem}
+
+  Complete the [Question] based on the [instruction] and Make sure to output final code wrapped with <ANS_START> and <ANS_END>.
+  The final code wrapped in <ANS_START> and <ANS_END> and should only contain the final code, without any reasoning or related explanations.
+
+  [Answers]:
+  
+
+meta_sample_template: |
+  You are given a task description and different thinking styles as follows:
+  [Task Description]: {task_description}
+  [Thinking Styles]: {thinking_styles}
+  Now you need to generate {num_variations} variations of above task description adaptively mixing thinking styles while keeping similar semantic meaning with original Task Description. 
+  Make sure to output only the final task descriptions as a paragraph without any [] labels, and wrap each generated task description with <START> and <END>.
+  [Generated Prompts]:
+
+
+gen_knowledge_template: |
+  Generate interpretation about the code requirements: {specific_problem} 
+  
+  Please output the interpretation directly without including any code implementation or other content.
+
+gen_attribute_template: |
+  Extract only the key words or phrases from the following instruction that are most likely to influence a language model's output. Do not include any explanations or extra content. Just list the key words or phrases.
+  
+  [Instruction]: {base_instruction}
+
+attribute_based_refine_template: |
+  Below is the prompt for the task instruction:
+  {base_instruction}
+
+  The key words or phrases identified in the task instruction are:
+  {attributed_componment}
+
+  Please refine the original task instruction based on these key components. The refinement may include (but is not limited to) the following actions:
+  1、Refine vague terms to be more specific
+  2、Reorder key phrases for emphasis
+  3、Expand or compress phrases for clarity and focus
+  4、Add stylistic or structural constraints
+  5、Test synonyms or alternative wording
+  6、Eliminate redundant elements
+
+  The output should be an optimized version of the original task instruction.
+  Please ensure that the refined task_description is strictly enclosed within <START> and <END>.
+
+expert_template: |
+  For each instruction, write a high-quality description about the most capable and suitable agent to answer the instruction. In second person perspective.\n
+  
+  [Instruction]: Make a list of 5 possible effects of deforestation.\n
+  [Agent Description]: You are an environmental scientist with a specialization in the study of ecosystems and their interactions with human activities. You have extensive knowledge about the effects of deforestation on the environment, including the impact on biodiversity, climate change, soil quality, water resources, and human health. Your work has been widely recognized and has contributed to the development of policies and regulations aimed at promoting sustainable forest management practices. You are equipped with the latest research findings, and you can provide a detailed and comprehensive list of the possible effects of deforestation, including but not limited to the loss of habitat for countless species, increased greenhouse gas emissions, reduced water quality and quantity, soil erosion, and the emergence of diseases. Your expertise and insights are highly valuable in understanding the complex interactions between human actions and the environment.
+  
+  
+  [Instruction]: Identify a descriptive phrase for an eclipse.\n
+  [Agent Description]: You are an astronomer with a deep understanding of celestial events and phenomena. Your vast knowledge and experience make you an expert in describing the unique and captivating features of an eclipse. You have witnessed and studied many eclipses throughout your career, and you have a keen eye for detail and nuance. Your descriptive phrase for an eclipse would be vivid, poetic, and scientifically accurate. You can capture the awe-inspiring beauty of the celestial event while also explaining the science behind it. You can draw on your deep knowledge of astronomy, including the movement of the sun, moon, and earth, to create a phrase that accurately and elegantly captures the essence of an eclipse. Your descriptive phrase will help others appreciate the wonder of this natural phenomenon.
+  
+
+  
+  [Instruction]: Identify the parts of speech in this sentence: \"The dog barked at the postman\".\n
+  [Agent Description]: You are a linguist, well-versed in the study of language and its structures. You have a keen eye for identifying the parts of speech in a sentence and can easily recognize the function of each word in the sentence. You are equipped with a good understanding of grammar rules and can differentiate between nouns, verbs, adjectives, adverbs, pronouns, prepositions, and conjunctions. You can quickly and accurately identify the parts of speech in the sentence "The dog barked at the postman" and explain the role of each word in the sentence. Your expertise in language and grammar is highly valuable in analyzing and understanding the nuances of communication.
+  
+  
+  [Instruction]: {task_description}
+  [Agent Description]:
+  Please ensure that your final output is a single paragraph without including the [Agent Description] label.
+
+
+examples_critique_template: |
+  You are an expert example selector who can help in selection of right in-context examples to help the most suitable agent solve this problem.
+  You are also given the prompt instruction which is used to solve this task
+  [Prompt]: {prompt}
+  You are given the task description of the task:
+  [Task Description]: {task_description}
+  I'm trying to write a few shots prompt using {num_examples} in-context examples to effectively solve any questions of the above task.
+  My current {num_examples} in-context examples set are: {examples}
+  Think of analysing, understanding and creating examples of task on the criteria of diversity of types of examples, complexity of the nature/characteristics of the examples and relevance/compatibility to the whole example set in total.
+  Output all the suggestions/ improvement which could be made to improve each individual example of the whole example selection set.
+
+examples_critique_template_zero_shot: |
+  You are an expert example selector who can help in selecting the right in-context examples to assist the most suitable agent in solving a given problem.
+  
+  You are provided with the task description and a specific problem within this task, represented as follows:
+  [Task Description]: {task_description}
+  [Specific Problem]: {specific_problem}
+  
+  To better assist the agent in solving the specific problem mentioned above, I'm writing {num_examples} in-context examples that are most relevant to this specific problem.
+  
+  When selecting examples, carefully consider the following criteria:
+  
+  Diversity in the types of examples
+  Complexity in the nature/characteristics of the examples
+  Relevance and compatibility with the overall example set
+  Based on these considerations, provide all suggested examples along with improvements that could be made to enhance each individual example within the entire selection set.
+
+examples_optimization_template: |
+  You are an expert example selector who specializes in selecting the right in-context examples to help the agent solve a given problem effectively.
+  
+  You are provided with the task description and a specific problem within this task, represented as follows:
+  [Task Description]: {task_description}
+  [Specific Problem]: {specific_problem}
+  
+  Additionally, you are given a set of suggestions/improvements that could enhance each example in the selection set:
+  [SUGGESTION/IMPROVEMENT]: {critique}
+  
+  Based on this information, carefully and strategically create a new set of {num_examples} examples that are directly relevant to the specific problem while adhering to the given suggestions and improvements.
+  
+  Each example must be wrapped within <START> and <END>, following this strict format:
+  
+  Example Format
+  [Question]: Includes the function signature and a detailed docstring. The docstring should not only describe the function's functionality but also contain a pseudocode section, providing a structured breakdown of the logic. This pseudocode may include sequential steps, conditionals, and loops but should not include any actual code implementation.
+  [Answer]: Presents a logical reasoning process leading to the solution. The final code implementation should be wrapped within <ANS_START> and <ANS_END>.Important: If the Specific Problem includes prewritten helper functions or imported packages, this part must also be wrapped within <ANS_START> and <ANS_END>.
+  Example Template
+  <START>  
+    [Question]:
+    {gt_example}  
+    [Answer]:
+      <ANS_START>
+        import ***  # Imported packages from the specific problem  
+        def (prewritten helper functions in the specific problem):  
+      <ANS_END>
+  <END>  
+  
+  Now, please generate the new set of improved examples following the format shown above. Please ensure that the new examples retain the <START>, <END>, [Question], [Answer], and <ANS_START>, <ANS_END> tags in the generated new examples:
+  
+  [New Examples]:
+
+
+
+
+
+  
